@@ -84,6 +84,7 @@ $(document).ready(function(){
 
 
     $("body").click(function(event){  
+    // $('body').on('click', function(event) {
         ripple_list.push({"x":event.pageX,"y":event.pageY,"multiplier":1})
         $(".outer").fadeOut('slow')
         $("#footer").fadeIn(10000)
