@@ -1,5 +1,3 @@
-
-var random_param = 2
 function recursive_circle(x,y,size,org_size){
 	
 	if (size<=0.1*org_size){

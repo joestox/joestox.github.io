@@ -4,9 +4,6 @@ var ctx
 function initialize_canvas(){
 
     canvas = document.getElementById("canvas");
-    // canvas.width = document.body.clientWidth;
-    // canvas.height = document.body.clientHeight;
-
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight
     ctx = canvas.getContext("2d");
@@ -89,6 +86,7 @@ $(document).ready(function(){
     $("body").click(function(event){  
         ripple_list.push({"x":event.pageX,"y":event.pageY,"multiplier":1})
         $(".outer").fadeOut('slow')
+        $("#footer").fadeIn(10000)
     })
 
     function sleep_loop(){

@@ -9,6 +9,11 @@ h1 {
     font-family: 'Montserrat',verdana,arial,sans-serif;
 }
 
+p {
+    color:#ffffff;
+    font-family: 'Montserrat',verdana,arial,sans-serif;
+}
+
 .outer {
     display: table;
     position: absolute;
@@ -28,4 +33,16 @@ h1 {
     text-align: center;
     z-index: 1;
 
+}
+
+#footer
+{
+     position: fixed;
+     bottom: 0;
+     right: 0;
+     display: none;
+}
+
+#footer p {
+  padding-right: 10px;
 }
