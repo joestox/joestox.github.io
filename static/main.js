@@ -18,20 +18,7 @@ function clear_canvas() {
 }
 
 
-function rotate(rotation){
-    ctx.rotate(rotation*Math.PI/180);
-}
 
-
-function draw_line(size){
-
-    ctx.strokeStyle = '#FF3030';
-    ctx.moveTo(0,0)
-    ctx.lineTo(size,0)
-    ctx.stroke();
-    ctx.translate(size,0);
-
-}
 
 
 function draw_circle_with_alpha(x,y,radius,color){
@@ -48,15 +35,12 @@ function draw_circle_with_alpha(x,y,radius,color){
 }
 
 
-
-
-
 function draw_circle(x,y,radius,color){
 
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x,y,radius,0,2*Math.PI,false);
-    ctx.arc(x,y,radius*0.9,0,2*Math.PI, true);
+    ctx.arc(x,y,radius*0.85,0,2*Math.PI, true);
     ctx.closePath();
     ctx.fill();
 
@@ -70,21 +54,8 @@ $(document).ready(function(){
     initialize_canvas()
     clear_canvas()
 
-    // draw_circle(200,200,50)
-    // draw_circle(200,200,55,"#FF3030")
-
-    // ctx.translate(100,300);
-    // koch(5,300)
-    // koch_star(4, 300)
-
-
-    // json = [1,1,[2,2],1, [3], {"a":[1,{"a":[3,1]}],"b":2}, 1]
-    // total = sum_json(json)
-    // console.log(total)
-
 
     $("body").click(function(event){  
-    // $('body').on('click', function(event) {
         ripple_list.push({"x":event.pageX,"y":event.pageY,"multiplier":1})
         $(".outer").fadeOut('slow')
         $("#footer").fadeIn(10000)
@@ -97,7 +68,7 @@ $(document).ready(function(){
         for(var i in ripple_list){
 
             alpha = recursive_circle(ripple_list[i].x, ripple_list[i].y, 1+ripple_list[i].multiplier,1+ripple_list[i].multiplier)
-            ripple_list[i].multiplier = ripple_list[i].multiplier + 2
+            ripple_list[i].multiplier = ripple_list[i].multiplier + Math.pow(ripple_list[i].multiplier,1/3)
 
             if (alpha < 0.015){
                 ripple_is_gone = true
@@ -110,6 +81,8 @@ $(document).ready(function(){
             ripple_list = ripple_list.splice(1, removal_num);
             ripple_is_gone = false
         }
+
+        console.log(ripple_list.length)
 
         setTimeout(sleep_loop, 40)
 
