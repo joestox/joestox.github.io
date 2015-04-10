@@ -4,8 +4,11 @@ var ctx
 function initialize_canvas(){
 
     canvas = document.getElementById("canvas");
-    canvas.width = document.body.clientWidth;
-    canvas.height = document.body.clientHeight;
+    // canvas.width = document.body.clientWidth;
+    // canvas.height = document.body.clientHeight;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight
     ctx = canvas.getContext("2d");
 
 }
@@ -67,6 +70,9 @@ function draw_circle(x,y,radius,color){
 
 $(document).ready(function(){
 
+    initialize_canvas()
+    clear_canvas()
+
     // draw_circle(200,200,50)
     // draw_circle(200,200,55,"#FF3030")
 
@@ -111,8 +117,7 @@ $(document).ready(function(){
     }
 
 
-    initialize_canvas()
-    clear_canvas()
+    
     var multiplier = 0
     var ripple_list = []
     var removal_num = 0
