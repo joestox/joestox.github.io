@@ -21,30 +21,52 @@ function clear_canvas() {
 
 
 
-function draw_circle_with_alpha(x,y,radius,color){
+function draw_circle_with_alpha(x,y,radius,color,multiplier){
 
-    alpha = Math.pow(0.97,0.5*radius)
+    alpha = 1-(multiplier/200)
 
     ctx.save();
     ctx.globalAlpha = alpha;
-    draw_circle(x,y,radius,color)
+    draw_circle(x,y,radius,color,multiplier)
     ctx.restore();
+
 
     return alpha
 
 }
 
 
-function draw_circle(x,y,radius,color){
+
+
+
+
+
+function draw_circle(x,y,radius,color,multiplier){
 
     ctx.fillStyle = color;
     ctx.beginPath();
-    ctx.arc(x,y,radius,0,2*Math.PI,false);
-    ctx.arc(x,y,radius*0.85,0,2*Math.PI, true);
+
+    radius_list = get_circle_sizes(multiplier*radius)
+
+    ctx.arc(x,y,radius_list[0],0,2*Math.PI,false);
+    ctx.arc(x,y,radius_list[1],0,2*Math.PI, true);
     ctx.closePath();
     ctx.fill();
 
 }
+
+
+
+
+function get_circle_sizes(s){
+
+    s_small = s - 1
+    return [s, s_small]
+}
+
+
+
+
 
 
 
@@ -56,9 +78,13 @@ $(document).ready(function(){
 
 
     $("body").click(function(event){  
-        ripple_list.push({"x":event.pageX,"y":event.pageY,"multiplier":1})
+
+        ripple_list.push({"x":event.pageX,"y":event.pageY,"size":0.99,"multiplier":10})
         $(".outer").fadeOut('slow')
         $("#footer").fadeIn(10000)
+
+        // sleep_loop()
+
     })
 
     function sleep_loop(){
@@ -67,10 +93,14 @@ $(document).ready(function(){
 
         for(var i in ripple_list){
 
-            alpha = recursive_circle(ripple_list[i].x, ripple_list[i].y, 1+ripple_list[i].multiplier,1+ripple_list[i].multiplier)
-            ripple_list[i].multiplier = ripple_list[i].multiplier + Math.pow(ripple_list[i].multiplier,1/3)
+            alpha = recursive_circle(ripple_list[i].x, ripple_list[i].y, ripple_list[i].size,ripple_list[i].multiplier)
+            ripple_list[i].multiplier = ripple_list[i].multiplier + 10
+
+            // console.log(alpha)
 
             if (alpha < 0.015){
+                // console.log('hi')
+            // if (ripple_list[i].multiplier > 300){
                 ripple_is_gone = true
                 removal_num = removal_num + 1
             }
@@ -82,9 +112,7 @@ $(document).ready(function(){
             ripple_is_gone = false
         }
 
-        console.log(ripple_list.length)
-
-        setTimeout(sleep_loop, 40)
+        setTimeout(sleep_loop, 100)
 
     }
 
@@ -93,8 +121,9 @@ $(document).ready(function(){
     var multiplier = 0
     var ripple_list = []
     var removal_num = 0
-    var ripple_is_gone = true
+    var ripple_is_gone = false
     sleep_loop()
+
 
 
 });

@@ -1,17 +1,22 @@
-function recursive_circle(x,y,size,org_size){
+function recursive_circle(x,y,size,multiplier){
 	
-	if (size<=0.1*org_size){
+	if (multiplier*Math.pow(size,2) - 1 <= 0){
 	}
+
 	else {
 
 		color = "#3370d4"
-		size = size*0.6
-		alpha = draw_circle_with_alpha(x,y,size,color)
-		recursive_circle(x,y,size,org_size)
+		size = Math.pow(size,2 - (multiplier/2000))
+
+		alpha = draw_circle_with_alpha(x,y,size,color,multiplier)
+		recursive_circle(x,y,size,multiplier)
 
 	}	
 
-return alpha
+	return alpha
 
 }
+
+
+
 
